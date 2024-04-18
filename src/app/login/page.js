@@ -1,15 +1,25 @@
 import React from 'react'
 import Layout from './layout.js'
-import logoSelectom from "../.."
+import Image from 'next/image'
 
 function page() {
   return (
     <Layout>
-       <section className='w-full '>
+       <section className='flex '>
         <div className='w-1/2'>
-            <img src={logoSelectom}></img>
+            <Image src="/selectos-logo-login.png" 
+             width={900}
+      height={900}/>
         </div>
-        <div></div>
+        <div className='w-1/2 bg-white flex-cols items-center justify-center'>
+                <h1 className='text-green-900'>Bienvenido</h1>
+                <label className='d-block'>
+                    Nombre usuario
+                </label>
+                <input type='text' className='shadow'>
+                </input>
+  
+        </div>
        </section>
     </Layout>
   )
