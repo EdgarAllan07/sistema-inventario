@@ -2,12 +2,13 @@
 import React from 'react'
 import SideBar from './SideBar'
 
-function menu() {
+function Menu() {
   return (
     <div>
         <SideBar></SideBar>
+        hola
     </div>
   )
 }
 
-export default menu
+export default Menu

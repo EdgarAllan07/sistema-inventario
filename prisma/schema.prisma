@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,125 @@ generator client {
 datasource db {
   provider = "sqlserver"
   url      = env("DATABASE_URL")
+}
+
+model Categorias {
+  id_categoria Int          @id(map: "PK_Categorias") @default(autoincrement())
+  nombre       String?      @db.VarChar(50)
+  id_producto  Int?
+  id_proveedor Int?
+  Proveedores  Proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "FK_Categorias_Proveedores")
+  Ofertas      Ofertas[]
+  Productos    Productos[]
+}
+
+model Clientes {
+  id_cliente    Int             @id(map: "PK_Clientes") @default(autoincrement())
+  nombre        String?         @db.VarChar(50)
+  apellido      String?         @db.VarChar(50)
+  dui           String?         @db.VarChar(50)
+  direccion     String?         @db.VarChar(50)
+  telefono      String?         @db.VarChar(50)
+  email         String?         @db.VarChar(50)
+  Venta_detalle Venta_detalle[]
+}
+
+model Existencia {
+  id_existencias Int        @id(map: "PK_Existencia") @default(autoincrement())
+  id_sucursal    Int?
+  existencias    Int?
+  id_producto    Int?
+  Productos      Productos? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "FK_Existencia_Productos")
+  Sucursal       Sucursal?  @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "FK_Existencia_Sucursal")
+}
+
+model Ofertas {
+  id_oferta     Int             @id(map: "PK_Ofertas") @default(autoincrement())
+  id_producto   Int?
+  descuento     Float?
+  precio_oferta Float?
+  fecha_inicial DateTime?       @db.Date
+  fecha_fin     DateTime?       @db.Date
+  id_categoria  Int?
+  Categorias    Categorias?     @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "FK_Ofertas_Categorias")
+  Productos     Productos?      @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "FK_Ofertas_Productos")
+  Venta_detalle Venta_detalle[]
+}
+
+model Productos {
+  id_producto  Int          @id(map: "PK_Productos") @default(autoincrement())
+  nombre       String?      @db.VarChar(50)
+  descripcion  String?      @db.VarChar(100)
+  precio       Float?
+  categoria    String?      @db.VarChar(50)
+  existencias  Int?
+  id_categoria Int?
+  id_proveedor Int?
+  Existencia   Existencia[]
+  Ofertas      Ofertas[]
+  Categorias   Categorias?  @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "FK_Productos_Categorias")
+  Proveedores  Proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "FK_Productos_Proveedores")
+  Venta        Venta        @relation(fields: [id_producto], references: [id_producto], onUpdate: NoAction, map: "FK_Productos_Venta")
+}
+
+model Proveedores {
+  id_proveedor Int          @id(map: "PK_Proveedores") @default(autoincrement())
+  nombre       String?      @db.VarChar(50)
+  telefono     String?      @db.VarChar(50)
+  direccion    String?      @db.VarChar(50)
+  email        String?      @db.VarChar(50)
+  id_producto  Int?
+  Categorias   Categorias[]
+  Productos    Productos[]
+}
+
+model Sucursal {
+  id_sucursal   Int             @id(map: "PK_existencias") @default(autoincrement())
+  direccion     String?         @db.VarChar(50)
+  existencias   Int?
+  Existencia    Existencia[]
+  Venta_detalle Venta_detalle[]
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B612882C053") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}
+
+model Tipo_documento {
+  id_documento  Int             @id(map: "PK_Tipo_documento") @default(autoincrement())
+  tipo          String?         @db.VarChar(50)
+  Venta_detalle Venta_detalle[]
+}
+
+model Venta {
+  id_producto   Int            @id(map: "PK_Venta") @default(autoincrement())
+  precio        Float?
+  cantidad      Int?
+  id_venta      Int?
+  Productos     Productos?
+  Venta_detalle Venta_detalle? @relation(fields: [id_venta], references: [id_venta], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_Venta_detalle")
+}
+
+model Venta_detalle {
+  id_venta       Int             @id(map: "PK_Venta_detalle") @default(autoincrement())
+  fecha_venta    DateTime?       @db.DateTime
+  id_cliente     Int?
+  id_sucursal    Int?
+  subtotal       Float?
+  total          Float?
+  descuento      Float?
+  iva            Float?
+  id_documento   Int?
+  id_oferta      Int?
+  Venta          Venta[]
+  Clientes       Clientes?       @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Clientes")
+  Ofertas        Ofertas?        @relation(fields: [id_oferta], references: [id_oferta], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Ofertas")
+  Sucursal       Sucursal?       @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Sucursal")
+  Tipo_documento Tipo_documento? @relation(fields: [id_documento], references: [id_documento], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Tipo_documento")
 }
