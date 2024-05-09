@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from "./layout.js";
-import Login from "@/components/Login"
+import Login from "../../components/Login"
 
 function page() {
   return (
