@@ -5,7 +5,7 @@ import Table from "./Table"
 
 function Menu() {
   return (
-    <div className='w-screen h-screen'>
+    <div >
         <SideBar></SideBar>
         <Table></Table>
     </div>

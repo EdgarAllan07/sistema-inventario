@@ -1,12 +1,13 @@
 import Image from "next/image";
-import Menu  from "../components/Menu.jsx";
+import Login  from "../components/Login.jsx";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Menu>
-        
-      </Menu>
-    </main>
+    <div className='bg-[#EEEEEE] h-screen flex justify-center items-center'>
+    
+    <Login></Login>
+    
+  </div>
   );
 }
+
