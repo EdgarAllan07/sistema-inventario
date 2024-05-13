@@ -5,8 +5,10 @@ import Table from "./Table"
 
 function Menu() {
   return (
-    <div >
+    <div  >
+   
         <SideBar></SideBar>
+    
         <Table></Table>
     </div>
   )
