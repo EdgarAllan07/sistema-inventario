@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import SideBar from './SideBar'
-import Table from "./Table"
+import Productos from './tables/Productos'
 
 function Menu() {
   return (
@@ -9,7 +9,7 @@ function Menu() {
    
         <SideBar></SideBar>
     
-        <Table></Table>
+     
     </div>
   )
 }

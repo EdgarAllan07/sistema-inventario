@@ -1,8 +1,9 @@
 import React from 'react';
 
-function Table() {
+function Productos() {
   return (
     <div>
+      <h1 className='text-xl font-semibold text-center'>Productos</h1>
       <div className="relative overflow-x-auto h-full">
         <table className="w-full h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -71,4 +72,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default Productos;
