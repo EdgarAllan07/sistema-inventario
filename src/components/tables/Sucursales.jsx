@@ -1,75 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Sucursales() {
+  const [sucursales, setSucursales] = useState([]);
+
+  useEffect(() => {
+    const getSucursales = async () => {
+      try {
+        const response = await axios.get("/api/sucursales");
+        setSucursales(response.data);
+      } catch (error) {
+        console.error("Error al obtener los sucursales:", error);
+      }
+    };
+    getSucursales();
+  }, []);
+
   return (
-    <div>
-      <h1 className='text-xl font-semibold text-center'>Sucursales</h1>
-    <div className="relative overflow-x-auto h-full">
-      <table className="w-full h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Product
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Color
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Category
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Apple MacBook Pro 17"
-            </th>
-            <td className="px-6 py-4">
-              Silver
-            </td>
-            <td className="px-6 py-4">
-              Laptop
-            </td>
-            <td className="px-6 py-4">
-              $2999
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Microsoft Surface Pro
-            </th>
-            <td className="px-6 py-4">
-              White
-            </td>
-            <td className="px-6 py-4">
-              Laptop PC
-            </td>
-            <td className="px-6 py-4">
-              $1999
-            </td>
-          </tr>
-          <tr className="bg-white dark:bg-gray-800">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Magic Mouse 2
-            </th>
-            <td className="px-6 py-4">
-              Black
-            </td>
-            <td className="px-6 py-4">
-              Accessories
-            </td>
-            <td className="px-6 py-4">
-              $99
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <>
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="w-full max-w-5xl overflow-auto ml-52">
+      <h1 className='text-xl font-semibold text-center '>Sucursales</h1>
+        <div className="relative overflow-x-auto h-full "  style={{ maxHeight: '32rem' }}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+              <tr>
+                <th scope="col" className="px-6 py-3">ID</th>
+                <th scope="col" className="px-6 py-3">Direccion</th>
+                <th scope="col" className="px-6 py-3">Existencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sucursales.map(sucursal => (
+                <tr key={sucursal.id} className="bg-white border-b">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                    {sucursal.id_sucursal}
+                  </th>
+                  <td className="px-6 py-4">{sucursal.direccion}</td>
+                  <td className="px-6 py-4">{sucursal.existencias}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  )
+    </>
+  );
 }
 
-export default Sucursales
+export default Sucursales;

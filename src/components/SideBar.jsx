@@ -1,37 +1,34 @@
 "use client";
 import React from "react";
-import Productos from './tables/Productos'
-import Sucursales from "./tables/Sucursales"
-import Usuarios  from "./tables/Usuarios"
-import Proveedores from "./tables/Proveedores"
-import Empleados from "./tables/Empleados"
+import Productos from "./tables/Productos";
+import Sucursales from "./tables/Sucursales";
+import Categorias from "./tables/Categorias";
+import Proveedores from "./tables/Proveedores";
+import Empleados from "./tables/Empleados";
 import { useState } from "react";
 
 function SideBar() {
+  const [table, setTable] = useState("");
 
-  const [table,setTable] = useState("");
-
-
-  
   const renderComponent = () => {
-    if(table !== ""){
+    if (table !== "") {
       switch (table) {
         case "sucursales":
           return <Sucursales />;
         case "productos":
           return <Productos />;
         case "usuarios":
-          return <Usuarios></Usuarios>;
+          return <Categorias></Categorias>;
         case "proveedores":
-          return <Proveedores></Proveedores>
+          return <Proveedores></Proveedores>;
         case "empleados":
-          return <Empleados></Empleados>
+          return <Empleados></Empleados>;
         default:
           return null; // Puedes manejar el caso predeterminado según tu lógica
       }
     }
   };
-  
+
   return (
     <div>
       <button
@@ -67,15 +64,15 @@ function SideBar() {
             <li>
               <img src="super-selector-logo-png 1.png"></img>
             </li>
-            
+
             <li>
               <button
                 type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
-                onClick={()=>{
-                 setTable("sucursales") 
+                onClick={() => {
+                  setTable("sucursales");
                 }}
               >
                 <svg
@@ -88,7 +85,7 @@ function SideBar() {
                   <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
                 </svg>
                 <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                 Sucursales
+                  Sucursales
                 </span>
               </button>
               <ul id="dropdown-example" class="hidden py-2 space-y-2">
@@ -96,7 +93,6 @@ function SideBar() {
                   <a
                     href="#"
                     class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    
                   >
                     Productos
                   </a>
@@ -123,9 +119,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={()=>{
-                  setTable("usuarios") 
-                 }}
+                onClick={() => {
+                  setTable("usuarios");
+                }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -136,16 +132,16 @@ function SideBar() {
                 >
                   <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                 </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Usuarios</span>
+                <span class="flex-1 ms-3 whitespace-nowrap">Categorias</span>
               </a>
             </li>
             <li>
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={()=>{
-                  setTable("proveedores") 
-                 }}
+                onClick={() => {
+                  setTable("proveedores");
+                }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -163,9 +159,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={()=>{
-                  setTable("empleados") 
-                 }}
+                onClick={() => {
+                  setTable("empleados");
+                }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -183,9 +179,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={()=>{
-                  setTable("productos") 
-                 }}
+                onClick={() => {
+                  setTable("productos");
+                }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white"

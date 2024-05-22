@@ -3,20 +3,20 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const sucursal = await prisma.sucursal.findMany();
+    const cliente = await prisma.clientes.findMany();
 
-    if (!sucursal || sucursal.length === 0) {
+    if (!cliente || cliente.length === 0) {
       return NextResponse.json(
         { message: "No se encontró ningún producto o el endpoint está malo" },
         { status: 404 }
       );
     }
-    console.log(sucursal)
-    return NextResponse.json(sucursal);
+    console.log(cliente)
+    return NextResponse.json(cliente);
   } catch (error) {
-    console.error("Error al buscar sucursal:", error);
+    console.error("Error al buscar cliente:", error);
     return NextResponse.json({
-      message: "Ocurrió un error al buscar sucursales",
+      message: "Ocurrió un error al buscar clientes",
       error: error.message // Esto proporciona más detalles sobre el error
     }, { status: 500 });
   }

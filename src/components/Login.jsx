@@ -45,7 +45,7 @@ function Login() {
                 required
               />
               <div className="flex justify-center">
-                <button className="bg-[#61AF30] text-white px-4 py-2 font-semibold rounded-lg shadow-xl" type="submit">
+                <button className="bg-[#61AF30] text-white px-4 py-2 font-semibold rounded-lg shadow-xl" type="submit" onClick={()=>{router.push("/Menu")}}>
                   Ingresa
                 </button>
               </div>

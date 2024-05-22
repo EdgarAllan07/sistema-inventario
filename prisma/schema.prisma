@@ -13,7 +13,7 @@ model sysdiagrams {
   diagram_id   Int     @id(map: "pk__sysdiagr__c2b05b61a59d49c0") @default(autoincrement())
   version      Int?
   definition   Bytes?
-  trial278     String? @db.Char(1)
+  trial966     String? @db.Char(1)
 
   @@unique([principal_id, name], map: "uk_principal_name")
 }
@@ -23,7 +23,7 @@ model categorias {
   nombre       String?      @db.VarChar(50)
   id_producto  Int?
   id_proveedor Int?
-  trial271     String?      @db.Char(1)
+  trial963     String?      @db.Char(1)
   proveedores  proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "fk_categorias_proveedores")
   ofertas      ofertas[]
   productos    productos[]
@@ -37,7 +37,7 @@ model clientes {
   direccion     String?         @db.VarChar(50)
   telefono      String?         @db.VarChar(50)
   email         String?         @db.VarChar(50)
-  trial274      String?         @db.Char(1)
+  trial963      String?         @db.Char(1)
   venta_detalle venta_detalle[]
 }
 
@@ -46,7 +46,7 @@ model existencia {
   id_sucursal    Int?
   existencias    Int?
   id_producto    Int?
-  trial274       String?    @db.Char(1)
+  trial966       String?    @db.Char(1)
   productos      productos? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "fk_existencia_productos")
   sucursal       sucursal?  @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "fk_existencia_sucursal")
 }
@@ -59,7 +59,7 @@ model ofertas {
   fecha_inicial DateTime?       @db.Date
   fecha_fin     DateTime?       @db.Date
   id_categoria  Int?
-  trial274      String?         @db.Char(1)
+  trial966      String?         @db.Char(1)
   categorias    categorias?     @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_ofertas_categorias")
   productos     productos?      @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "fk_ofertas_productos")
   venta_detalle venta_detalle[]
@@ -74,7 +74,7 @@ model productos {
   existencias  Int?
   id_categoria Int?
   id_proveedor Int?
-  trial274     String?      @db.Char(1)
+  trial966     String?      @db.Char(1)
   existencia   existencia[]
   ofertas      ofertas[]
   categorias   categorias?  @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_productos_categorias")
@@ -88,7 +88,7 @@ model proveedores {
   direccion    String?      @db.VarChar(50)
   email        String?      @db.VarChar(50)
   id_producto  Int?
-  trial271     String?      @db.Char(1)
+  trial963     String?      @db.Char(1)
   categorias   categorias[]
   productos    productos[]
 }
@@ -97,7 +97,7 @@ model sucursal {
   id_sucursal   Int             @id(map: "pk_existencias") @default(autoincrement())
   direccion     String?         @db.VarChar(50)
   existencias   Int?
-  trial274      String?         @db.Char(1)
+  trial966      String?         @db.Char(1)
   existencia    existencia[]
   venta_detalle venta_detalle[]
 }
@@ -105,7 +105,7 @@ model sucursal {
 model tipo_documento {
   id_documento  Int             @id(map: "pk_tipo_documento") @default(autoincrement())
   tipo          String?         @db.VarChar(50)
-  trial278      String?         @db.Char(1)
+  trial966      String?         @db.Char(1)
   venta_detalle venta_detalle[]
 }
 
@@ -116,7 +116,7 @@ model usuarios {
   apellido   String? @db.VarChar(50)
   email      String? @db.VarChar(25)
   celular    String? @db.VarChar(10)
-  trial278   String? @db.Char(1)
+  trial966   String? @db.Char(1)
 }
 
 model venta {
@@ -124,7 +124,7 @@ model venta {
   precio           Float?
   cantidad         Int?
   id_venta_detalle Int?
-  trial278         String?       @db.Char(1)
+  trial969         String?       @db.Char(1)
   venta_detalle    venta_detalle @relation(fields: [id_venta], references: [id_venta_detalle], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_venta_detalle")
 }
 
@@ -139,7 +139,7 @@ model venta_detalle {
   iva              Float?
   id_documento     Int?
   id_oferta        Int?
-  trial278         String?         @db.Char(1)
+  trial969         String?         @db.Char(1)
   venta            venta?
   clientes         clientes?       @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_clientes")
   ofertas          ofertas?        @relation(fields: [id_oferta], references: [id_oferta], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_ofertas")
