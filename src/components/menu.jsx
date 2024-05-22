@@ -1,13 +1,15 @@
 "use client"
 import React from 'react'
 import SideBar from './SideBar'
-import Table from "./Table"
+import Productos from './tables/Productos'
 
 function Menu() {
   return (
-    <div className='w-screen h-screen'>
+    <div  >
+   
         <SideBar></SideBar>
-        <Table></Table>
+    
+     
     </div>
   )
 }

@@ -1,7 +1,37 @@
 "use client";
 import React from "react";
+import Productos from './tables/Productos'
+import Sucursales from "./tables/Sucursales"
+import Usuarios  from "./tables/Usuarios"
+import Proveedores from "./tables/Proveedores"
+import Empleados from "./tables/Empleados"
+import { useState } from "react";
 
 function SideBar() {
+
+  const [table,setTable] = useState("");
+
+
+  
+  const renderComponent = () => {
+    if(table !== ""){
+      switch (table) {
+        case "sucursales":
+          return <Sucursales />;
+        case "productos":
+          return <Productos />;
+        case "usuarios":
+          return <Usuarios></Usuarios>;
+        case "proveedores":
+          return <Proveedores></Proveedores>
+        case "empleados":
+          return <Empleados></Empleados>
+        default:
+          return null; // Puedes manejar el caso predeterminado según tu lógica
+      }
+    }
+  };
+  
   return (
     <div>
       <button
@@ -44,6 +74,9 @@ function SideBar() {
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
+                onClick={()=>{
+                 setTable("sucursales") 
+                }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900  dark:group-hover:text-white"
@@ -63,6 +96,7 @@ function SideBar() {
                   <a
                     href="#"
                     class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    
                   >
                     Productos
                   </a>
@@ -89,6 +123,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={()=>{
+                  setTable("usuarios") 
+                 }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -106,6 +143,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={()=>{
+                  setTable("proveedores") 
+                 }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -123,6 +163,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={()=>{
+                  setTable("empleados") 
+                 }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
@@ -140,6 +183,9 @@ function SideBar() {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={()=>{
+                  setTable("productos") 
+                 }}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -155,7 +201,7 @@ function SideBar() {
             </li>
             <li className="fixed bottom-0 inset-x-0">
               <a
-                href="#"
+                href="/"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -175,6 +221,7 @@ function SideBar() {
           </ul>
         </div>
       </aside>
+      {renderComponent()}
     </div>
   );
 }
