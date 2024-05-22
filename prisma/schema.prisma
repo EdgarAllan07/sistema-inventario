@@ -3,55 +3,70 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Categorias {
-  id_categoria Int          @id(map: "PK_Categorias") @default(autoincrement())
+model sysdiagrams {
+  name         String  @db.VarChar(128)
+  principal_id Int
+  diagram_id   Int     @id(map: "pk__sysdiagr__c2b05b61a59d49c0") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+  trial278     String? @db.Char(1)
+
+  @@unique([principal_id, name], map: "uk_principal_name")
+}
+
+model categorias {
+  id_categoria Int          @id(map: "pk_categorias") @default(autoincrement())
   nombre       String?      @db.VarChar(50)
   id_producto  Int?
   id_proveedor Int?
-  Proveedores  Proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "FK_Categorias_Proveedores")
-  Ofertas      Ofertas[]
-  Productos    Productos[]
+  trial271     String?      @db.Char(1)
+  proveedores  proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "fk_categorias_proveedores")
+  ofertas      ofertas[]
+  productos    productos[]
 }
 
-model Clientes {
-  id_cliente    Int             @id(map: "PK_Clientes") @default(autoincrement())
+model clientes {
+  id_cliente    Int             @id(map: "pk_clientes") @default(autoincrement())
   nombre        String?         @db.VarChar(50)
   apellido      String?         @db.VarChar(50)
   dui           String?         @db.VarChar(50)
   direccion     String?         @db.VarChar(50)
   telefono      String?         @db.VarChar(50)
   email         String?         @db.VarChar(50)
-  Venta_detalle Venta_detalle[]
+  trial274      String?         @db.Char(1)
+  venta_detalle venta_detalle[]
 }
 
-model Existencia {
-  id_existencias Int        @id(map: "PK_Existencia") @default(autoincrement())
+model existencia {
+  id_existencias Int        @id(map: "pk_existencia") @default(autoincrement())
   id_sucursal    Int?
   existencias    Int?
   id_producto    Int?
-  Productos      Productos? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "FK_Existencia_Productos")
-  Sucursal       Sucursal?  @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "FK_Existencia_Sucursal")
+  trial274       String?    @db.Char(1)
+  productos      productos? @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "fk_existencia_productos")
+  sucursal       sucursal?  @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "fk_existencia_sucursal")
 }
 
-model Ofertas {
-  id_oferta     Int             @id(map: "PK_Ofertas") @default(autoincrement())
+model ofertas {
+  id_oferta     Int             @id(map: "pk_ofertas") @default(autoincrement())
   id_producto   Int?
   descuento     Float?
   precio_oferta Float?
   fecha_inicial DateTime?       @db.Date
   fecha_fin     DateTime?       @db.Date
   id_categoria  Int?
-  Categorias    Categorias?     @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "FK_Ofertas_Categorias")
-  Productos     Productos?      @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "FK_Ofertas_Productos")
-  Venta_detalle Venta_detalle[]
+  trial274      String?         @db.Char(1)
+  categorias    categorias?     @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_ofertas_categorias")
+  productos     productos?      @relation(fields: [id_producto], references: [id_producto], onDelete: NoAction, onUpdate: NoAction, map: "fk_ofertas_productos")
+  venta_detalle venta_detalle[]
 }
 
-model Productos {
-  id_producto  Int          @id(map: "PK_Productos") @default(autoincrement())
+model productos {
+  id_producto  Int          @id(map: "pk_productos") @default(autoincrement())
   nombre       String?      @db.VarChar(50)
   descripcion  String?      @db.VarChar(100)
   precio       Float?
@@ -59,71 +74,75 @@ model Productos {
   existencias  Int?
   id_categoria Int?
   id_proveedor Int?
-  Existencia   Existencia[]
-  Ofertas      Ofertas[]
-  Categorias   Categorias?  @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "FK_Productos_Categorias")
-  Proveedores  Proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "FK_Productos_Proveedores")
-  Venta        Venta        @relation(fields: [id_producto], references: [id_producto], onUpdate: NoAction, map: "FK_Productos_Venta")
+  trial274     String?      @db.Char(1)
+  existencia   existencia[]
+  ofertas      ofertas[]
+  categorias   categorias?  @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_productos_categorias")
+  proveedores  proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "fk_productos_proveedores")
 }
 
-model Proveedores {
-  id_proveedor Int          @id(map: "PK_Proveedores") @default(autoincrement())
+model proveedores {
+  id_proveedor Int          @id(map: "pk_proveedores") @default(autoincrement())
   nombre       String?      @db.VarChar(50)
   telefono     String?      @db.VarChar(50)
   direccion    String?      @db.VarChar(50)
   email        String?      @db.VarChar(50)
   id_producto  Int?
-  Categorias   Categorias[]
-  Productos    Productos[]
+  trial271     String?      @db.Char(1)
+  categorias   categorias[]
+  productos    productos[]
 }
 
-model Sucursal {
-  id_sucursal   Int             @id(map: "PK_existencias") @default(autoincrement())
+model sucursal {
+  id_sucursal   Int             @id(map: "pk_existencias") @default(autoincrement())
   direccion     String?         @db.VarChar(50)
   existencias   Int?
-  Existencia    Existencia[]
-  Venta_detalle Venta_detalle[]
+  trial274      String?         @db.Char(1)
+  existencia    existencia[]
+  venta_detalle venta_detalle[]
 }
 
-model sysdiagrams {
-  name         String @db.NVarChar(128)
-  principal_id Int
-  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B612882C053") @default(autoincrement())
-  version      Int?
-  definition   Bytes?
-
-  @@unique([principal_id, name], map: "UK_principal_name")
-}
-
-model Tipo_documento {
-  id_documento  Int             @id(map: "PK_Tipo_documento") @default(autoincrement())
+model tipo_documento {
+  id_documento  Int             @id(map: "pk_tipo_documento") @default(autoincrement())
   tipo          String?         @db.VarChar(50)
-  Venta_detalle Venta_detalle[]
+  trial278      String?         @db.Char(1)
+  venta_detalle venta_detalle[]
 }
 
-model Venta {
-  id_producto   Int            @id(map: "PK_Venta") @default(autoincrement())
-  precio        Float?
-  cantidad      Int?
-  id_venta      Int?
-  Productos     Productos?
-  Venta_detalle Venta_detalle? @relation(fields: [id_venta], references: [id_venta], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_Venta_detalle")
+model usuarios {
+  id_usuario Int     @id(map: "pk_usuarios") @default(autoincrement())
+  contra     String?
+  nombre     String? @db.VarChar(50)
+  apellido   String? @db.VarChar(50)
+  email      String? @db.VarChar(25)
+  celular    String? @db.VarChar(10)
+  trial278   String? @db.Char(1)
 }
 
-model Venta_detalle {
-  id_venta       Int             @id(map: "PK_Venta_detalle") @default(autoincrement())
-  fecha_venta    DateTime?       @db.DateTime
-  id_cliente     Int?
-  id_sucursal    Int?
-  subtotal       Float?
-  total          Float?
-  descuento      Float?
-  iva            Float?
-  id_documento   Int?
-  id_oferta      Int?
-  Venta          Venta[]
-  Clientes       Clientes?       @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Clientes")
-  Ofertas        Ofertas?        @relation(fields: [id_oferta], references: [id_oferta], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Ofertas")
-  Sucursal       Sucursal?       @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Sucursal")
-  Tipo_documento Tipo_documento? @relation(fields: [id_documento], references: [id_documento], onDelete: NoAction, onUpdate: NoAction, map: "FK_Venta_detalle_Tipo_documento")
+model venta {
+  id_venta         Int           @id(map: "pk_venta") @default(autoincrement())
+  precio           Float?
+  cantidad         Int?
+  id_venta_detalle Int?
+  trial278         String?       @db.Char(1)
+  venta_detalle    venta_detalle @relation(fields: [id_venta], references: [id_venta_detalle], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_venta_detalle")
+}
+
+model venta_detalle {
+  id_venta_detalle Int             @id(map: "pk_venta_detalle") @default(autoincrement())
+  fecha_venta      DateTime?
+  id_cliente       Int?
+  id_sucursal      Int?
+  subtotal         Float?
+  total            Float?
+  descuento        Float?
+  iva              Float?
+  id_documento     Int?
+  id_oferta        Int?
+  trial278         String?         @db.Char(1)
+  venta            venta?
+  clientes         clientes?       @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_clientes")
+  ofertas          ofertas?        @relation(fields: [id_oferta], references: [id_oferta], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_ofertas")
+  sucursal         sucursal?       @relation(fields: [id_sucursal], references: [id_sucursal], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_sucursal")
+  tipo_documento   tipo_documento? @relation(fields: [id_documento], references: [id_documento], onDelete: NoAction, onUpdate: NoAction, map: "fk_venta_detalle_tipo_documento")
 }
