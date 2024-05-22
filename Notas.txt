@@ -2,3 +2,5 @@ Por cada seccion del sidebar crear una direccion para cada tabla junto a su crud
 Revisar la conexion a la base de datos y traerlo en la nube ya subido
 probar el servicio de azure gratuito junto con el servicio de vercel de la nube
 para la proxima semana comenzar a realizar el manual de usuario
+
+Metabase contra : pDAxtc3OagTxLTEO

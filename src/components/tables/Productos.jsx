@@ -20,7 +20,7 @@ function Productos() {
     <>
     <div className="flex justify-center items-center min-h-screen ">
       <div className="w-full max-w-5xl overflow-auto ml-52">
-      <h1 className='text-xl font-semibold text-center '>Productos</h1>
+      <h1 className='text-xl font-semibold text-center mb-5'>Productos</h1>
         <div className="relative overflow-x-auto h-full "  style={{ maxHeight: '32rem' }}>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">

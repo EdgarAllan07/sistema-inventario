@@ -5,10 +5,11 @@ import Sucursales from "./tables/Sucursales";
 import Categorias from "./tables/Categorias";
 import Proveedores from "./tables/Proveedores";
 import Empleados from "./tables/Empleados";
+import MainPage from "./MainPage";
 import { useState } from "react";
 
 function SideBar() {
-  const [table, setTable] = useState("");
+  const [table, setTable] = useState("main");
 
   const renderComponent = () => {
     if (table !== "") {
@@ -23,8 +24,10 @@ function SideBar() {
           return <Proveedores></Proveedores>;
         case "empleados":
           return <Empleados></Empleados>;
+        case  "main":
+          return <MainPage></MainPage>;
         default:
-          return null; // Puedes manejar el caso predeterminado según tu lógica
+          return <MainPage></MainPage>;
       }
     }
   };
