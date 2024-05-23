@@ -6,6 +6,7 @@ import Categorias from "./tables/Categorias";
 import Proveedores from "./tables/Proveedores";
 import Empleados from "./tables/Empleados";
 import MainPage from "./MainPage";
+import { FaGripLines } from "react-icons/fa6";
 import { useState } from "react";
 
 function SideBar() {
@@ -67,7 +68,18 @@ function SideBar() {
             <li>
               <img src="super-selector-logo-png 1.png"></img>
             </li>
-
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => {
+                  setTable("main");
+                }}
+              >
+                <FaGripLines className="text-2xl" />
+                <span class="flex-1 ms-3 whitespace-nowrap">Resumen</span>
+              </a>
+            </li>
             <li>
               <button
                 type="button"
