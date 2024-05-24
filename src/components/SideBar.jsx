@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import Productos from "./tables/Productos";
 import Sucursales from "./tables/Sucursales";
 import Categorias from "./tables/Categorias";
@@ -11,6 +12,7 @@ import { useState } from "react";
 
 function SideBar() {
   const [table, setTable] = useState("main");
+  const router = useRouter();
 
   const renderComponent = () => {
     if (table !== "") {
@@ -212,9 +214,13 @@ function SideBar() {
             </li>
             <li className="fixed bottom-0 inset-x-0">
               <a
-                href="/"
+                href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+                onClick={()=>{
+                  sessionStorage.removeItem("credenciales");
+                  router.push("/")
+                }}
+             >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-black transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
