@@ -25,8 +25,8 @@ function MainPage() {
         setEmpleados(r1.data);
         setCategorias(r2.data);
         setProductos(r3.data);
-        setProveedores(r4.data);
-        setSucursales(r5.data);
+        setProveedores(r5.data);
+        setSucursales(r4.data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }finally {

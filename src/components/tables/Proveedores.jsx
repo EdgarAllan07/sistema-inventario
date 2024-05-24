@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Proveedores() {
   const [proveedores, setProveedores] = useState([]);
@@ -15,6 +17,22 @@ function Proveedores() {
     };
     getProveedores();
   }, []);
+
+
+  const borrarProveedor = async (id) => {
+    if (id) {
+      try {
+        await axios.delete(`/api/proveedores/${id}`);
+        setProveedores((prevProductos) =>
+          prevProductos.filter((proveedor) => proveedor.id_proveedor !== id)
+        );
+        toast.info("Se ha eliminado el proveedor de la plantilla",{autoClose: 2000});
+      } catch (error) {
+        console.error("Error al borrar proveedor:", error);
+        toast.error("Este proveedor debe estar siendo usada en otra tabla",{autoClose: 2000})
+      }
+    }
+  };
 
   return (
     <>
@@ -41,7 +59,11 @@ function Proveedores() {
                   <td className="px-6 py-4">{proveedor.nombre}</td>
                   <td className="px-6 py-4">{proveedor.telefono}</td>
                   <td className="px-6 py-4">{proveedor.direccion }</td>
-                  <td className="px-6 py-4">{proveedor.email}</td>
+                  <td className="px-6 py-4 flex justify-between gap-4">{proveedor.email}
+                  <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  onClick={()=>{borrarProveedor(proveedor.id_proveedor)}}
+                  >Borrar</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -49,6 +71,7 @@ function Proveedores() {
         </div>
       </div>
     </div>
+    <ToastContainer />
     </>
   );
 }

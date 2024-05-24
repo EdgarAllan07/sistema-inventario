@@ -11,7 +11,6 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log(sucursal)
     return NextResponse.json(sucursal);
   } catch (error) {
     console.error("Error al buscar sucursal:", error);

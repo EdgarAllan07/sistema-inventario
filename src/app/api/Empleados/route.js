@@ -11,7 +11,7 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log(cliente)
+  
     return NextResponse.json(cliente);
   } catch (error) {
     console.error("Error al buscar cliente:", error);

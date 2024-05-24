@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Empleados() {
   const [empleados, setEmpleados] = useState([]);
@@ -16,6 +18,21 @@ function Empleados() {
     getEmpleados();
   }, []);
 
+
+  const borrarEmpleado = async (id) => {
+    if (id) {
+      try {
+        await axios.delete(`/api/Empleados/${id}`);
+        setEmpleados((prevProductos) =>
+          prevProductos.filter((empleado) => empleado.id_cliente !== id)
+        );
+        toast.info("Se ha eliminado al empleado de la plantilla",{autoClose: 2000});
+      } catch (error) {
+        console.error("Error al borrar empleado:", error);
+      }
+    }
+  };
+  
   return (
     <>
     <div className="flex justify-center items-center min-h-screen">
@@ -45,7 +62,11 @@ function Empleados() {
                   <td className="px-6 py-4">{empleado.dui}</td>
                   <td className="px-6 py-4">{empleado.telefono}</td>
                   <td className="px-6 py-4">{empleado.direccion }</td>
-                  <td className="px-6 py-4">{empleado.email}</td>
+                  <td className="px-6 py-4 flex justify-between gap-4">{empleado.email}
+                  <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  onClick={()=>{borrarEmpleado(empleado.id_cliente)}}
+                  >Borrar</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -53,6 +74,7 @@ function Empleados() {
         </div>
       </div>
     </div>
+    <ToastContainer />
     </>
   );
 }

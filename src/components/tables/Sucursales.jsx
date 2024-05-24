@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Sucursales() {
   const [sucursales, setSucursales] = useState([]);
@@ -16,6 +18,21 @@ function Sucursales() {
     getSucursales();
   }, []);
 
+  
+  const borrarSucursal =  async (id) => {
+    if (id) {
+      try {
+        await axios.delete(`/api/sucursales/${id}`);
+        setSucursales((prevProductos) =>
+          prevProductos.filter((sucursal) => sucursal.id_sucursal !== id)
+        );
+        toast.info("Se ha eliminado La sucursal",{autoClose: 2000});
+      } catch (error) {
+        console.error("Error al borrar sucursal:", error);
+      }
+    }
+  };
+  
   return (
     <>
     <div className="flex justify-center items-center min-h-screen ">
@@ -37,7 +54,11 @@ function Sucursales() {
                     {sucursal.id_sucursal}
                   </th>
                   <td className="px-6 py-4">{sucursal.direccion}</td>
-                  <td className="px-6 py-4">{sucursal.existencias}</td>
+                  <td className="px-6 py-4 flex justify-between gap-4">{sucursal.existencias}
+                  <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  onClick={()=>{borrarSucursal(sucursal.id_sucursal)}}
+                  >Borrar</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -45,6 +66,7 @@ function Sucursales() {
         </div>
       </div>
     </div>
+    <ToastContainer></ToastContainer>
     </>
   );
 }

@@ -11,7 +11,7 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log(proveedor)
+
     return NextResponse.json(proveedor);
   } catch (error) {
     console.error("Error al buscar proveedores:", error);
