@@ -1,11 +1,14 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
-
+  const router = useRouter();
+  
   useEffect(() => {
     const getCategorias = async () => {
       try {
@@ -39,6 +42,9 @@ function Categorias() {
     <>
     <div className="flex justify-center items-center min-h-screen  w-full">
       <div className="w-full max-w-5xl overflow-auto ml-52">
+      <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" onClick={()=>{
+          router.push('/Categoria')
+      }}>Ingresar nuevo registro</button>
       <h1 className='text-xl font-semibold text-center mb-5'>Categorias</h1>
         <div className="relative overflow-x-auto h-full "  style={{ maxHeight: '32rem' }}>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
