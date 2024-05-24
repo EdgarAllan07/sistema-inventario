@@ -11,7 +11,6 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log(categoria)
     return NextResponse.json(categoria);
   } catch (error) {
     console.error("Error al buscar categoria:", error);
@@ -21,3 +20,4 @@ export async function GET() {
     }, { status: 500 });
   }
 }
+

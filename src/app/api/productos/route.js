@@ -11,7 +11,6 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log(product)
     return NextResponse.json(product);
   } catch (error) {
     console.error("Error al buscar productos:", error);

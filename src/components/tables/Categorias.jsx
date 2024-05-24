@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
@@ -10,11 +12,28 @@ function Categorias() {
         const response = await axios.get("/api/categorias");
         setCategorias(response.data);
       } catch (error) {
-        console.error("Error al obtener los sucursales:", error);
+        console.error("Error al obtener los categorais:", error);
       }
     };
     getCategorias();
   }, []);
+
+  const borrarCategoria = async (id)=>{
+    if(id){
+      try{
+      const response = await axios.delete(`api/categorias/${id}`)
+      setCategorias((prevSponsor) =>
+        prevSponsor.filter((sponsors) => sponsors.id !== id)
+
+      );
+      toast.info("Se ha eliminado la categoria",{autoClose: 2000})
+      }catch(error){
+        console.error("Error al borrar categoria:", error);
+        toast.error("Esta categoria debe estar siendo usada en otra tabla",{autoClose: 2000})
+      }
+    }
+  }
+
 
   return (
     <>
@@ -31,11 +50,15 @@ function Categorias() {
             </thead>
             <tbody>
               {categorias.map(categoria => (
-                <tr key={categoria.id} className="bg-white border-b">
+                <tr key={categoria.id_categoria} className="bg-white border-b">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                     {categoria.id_categoria}
                   </th>
-                  <td className="px-6 py-4">{categoria.nombre}</td>
+                  <td className="px-6 py-4 flex justify-between gap-4">{categoria.nombre}
+                  <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  onClick={()=>{borrarCategoria(categoria.id_categoria)}}
+                  >Borrar</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -43,6 +66,7 @@ function Categorias() {
         </div>
       </div>
     </div>
+    <ToastContainer />
     </>
   );
 }
