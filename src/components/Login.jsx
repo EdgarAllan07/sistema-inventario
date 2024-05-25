@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 function Login() {
   const router = useRouter();
@@ -39,7 +40,13 @@ function Login() {
   return (
     <section className="flex">
       <div className="w-1/2">
-        <img src="/selectos-logo-login.png" className="w-full h-full" alt="Selectos Logo" />
+      
+        <Image
+      src="/selectos-logo-login.png"
+      width={500}
+      height={300}
+      alt="Picture of the author"
+    />
       </div>
       <div className="w-1/2 bg-white flex items-center justify-center">
         <div>

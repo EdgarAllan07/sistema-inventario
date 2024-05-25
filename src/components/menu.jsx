@@ -7,6 +7,7 @@ import Productos from "./tables/Productos";
 function Menu() {
   const router = useRouter();
   const data = sessionStorage.getItem("credenciales");
+  
   if (data) {
     return (
       <div>
