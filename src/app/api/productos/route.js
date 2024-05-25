@@ -3,7 +3,14 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const product = await prisma.productos.findMany();
+    const product = await prisma.productos.findMany(
+      {
+        orderBy: {
+          id_producto: 'asc',
+        },
+      }
+    );
+
 
     if (!product || product.length === 0) {
       return NextResponse.json(

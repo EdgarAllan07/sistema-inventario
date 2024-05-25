@@ -3,7 +3,13 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const cliente = await prisma.clientes.findMany();
+    const cliente = await prisma.clientes.findMany(
+      {
+        orderBy: {
+          id_cliente: 'asc',
+        },
+      }
+    );
 
     if (!cliente || cliente.length === 0) {
       return NextResponse.json(

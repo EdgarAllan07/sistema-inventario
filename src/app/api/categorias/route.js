@@ -3,7 +3,13 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const categoria = await prisma.categorias.findMany();
+    const categoria = await prisma.categorias.findMany(
+      {
+        orderBy: {
+          id_categoria: 'asc',
+        },
+      }
+    );
 
     if (!categoria || categoria.length === 0) {
       return NextResponse.json(

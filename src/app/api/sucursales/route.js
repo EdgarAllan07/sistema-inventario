@@ -3,7 +3,13 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const sucursal = await prisma.sucursal.findMany();
+    const sucursal = await prisma.sucursal.findMany(
+      {
+        orderBy: {
+          id_sucursal: 'asc',
+        },
+      }
+    );
 
     if (!sucursal || sucursal.length === 0) {
       return NextResponse.json(

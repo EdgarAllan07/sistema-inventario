@@ -3,7 +3,11 @@ import prisma from "../../../util/db";
 
 export async function GET() {
   try {
-    const proveedor = await prisma.proveedores.findMany();
+    const proveedor = await prisma.proveedores.findMany( {
+      orderBy: {
+        id_proveedor: 'asc',
+      },
+    });
 
     if (!proveedor || proveedor.length === 0) {
       return NextResponse.json(

@@ -9,6 +9,8 @@ import Empleados from "./tables/Empleados";
 import MainPage from "./MainPage";
 import { FaGripLines } from "react-icons/fa6";
 import { useState } from "react";
+import Image from "next/image";
+
 
 function SideBar() {
   const [table, setTable] = useState("main");
@@ -68,7 +70,13 @@ function SideBar() {
         <div class="h-full px-3 py-4 overflow-y-auto bg-[#2E6C37]">
           <ul class="space-y-2 font-medium  ">
             <li>
-              <img src="super-selector-logo-png 1.png"></img>
+              
+              <Image
+      src="/super-selector-logo-png 1.png"
+      width={500}
+      height={500}
+      alt="Picture of the author"
+    />
             </li>
             <li>
               <a
