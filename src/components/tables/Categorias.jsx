@@ -26,7 +26,7 @@ function Categorias() {
       try{
       const response = await axios.delete(`api/categorias/${id}`)
       setCategorias((prevSponsor) =>
-        prevSponsor.filter((sponsors) => sponsors.id !== id)
+        prevSponsor.filter((categoria) => categoria.id_categoria !== id)
 
       );
       toast.info("Se ha eliminado la categoria",{autoClose: 2000})
@@ -60,10 +60,11 @@ function Categorias() {
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                     {categoria.id_categoria}
                   </th>
-                  <td className="px-6 py-4 flex justify-between gap-4">{categoria.nombre}
+                  <td className="px-6 py-4 flex justify-between gap-12">{categoria.nombre}
                   <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                   onClick={()=>{borrarCategoria(categoria.id_categoria)}}
                   >Borrar</button>
+                  <button type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800" onClick={()=>{router.push(`/Categoria/${categoria.id_categoria}`)}}>Editar</button>
                   </td>
                 </tr>
               ))}

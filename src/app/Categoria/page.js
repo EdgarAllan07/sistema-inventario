@@ -1,10 +1,13 @@
 import React from 'react'
+import CategoriasForm from '../../components/forms/categoriasForm'
 
 function page() {
   return (
-    <div>
-      
-    </div>
+   
+      <div className='h-screen w-full flex justify-center items-center'>
+      <CategoriasForm></CategoriasForm>
+      </div>
+ 
   )
 }
 

@@ -21,3 +21,37 @@ export async function GET() {
     }, { status: 500 });
   }
 }
+
+
+export async function POST(req){
+  try {
+
+    const body = await req.json(); 
+    const { nombre,  apellido,dui,direccion,telefono,email} = body;
+
+    const clientes = await prisma.clientes.create({
+     data:{
+      nombre,
+      apellido,
+      dui,
+      direccion,
+      telefono,
+      email
+     }
+    });
+
+    if (!clientes || clientes.length === 0) {
+      return NextResponse.json(
+        { message: "No se encontró ningún empleado o el endpoint está malo" },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(clientes);
+  } catch (error) {
+    console.error("Error al buscar empleado:", error);
+    return NextResponse.json({
+      message: "Ocurrió un error al buscar empleado",
+      error: error.message // Esto proporciona más detalles sobre el error
+    }, { status: 500 });
+  }
+}

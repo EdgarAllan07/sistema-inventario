@@ -21,7 +21,6 @@ model sysdiagrams {
 model categorias {
   id_categoria Int          @id(map: "pk_categorias") @default(autoincrement())
   nombre       String?      @db.VarChar(50)
-  id_producto  Int?
   id_proveedor Int?
   trial963     String?      @db.Char(1)
   proveedores  proveedores? @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: NoAction, onUpdate: NoAction, map: "fk_categorias_proveedores")
@@ -87,7 +86,6 @@ model proveedores {
   telefono     String?      @db.VarChar(50)
   direccion    String?      @db.VarChar(50)
   email        String?      @db.VarChar(50)
-  id_producto  Int?
   trial963     String?      @db.Char(1)
   categorias   categorias[]
   productos    productos[]
