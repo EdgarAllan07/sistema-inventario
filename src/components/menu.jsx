@@ -1,24 +1,21 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
-import React from 'react'
-import SideBar from './SideBar'
-import Productos from './tables/Productos'
+import React from "react";
+import SideBar from "./SideBar";
+import Productos from "./tables/Productos";
 
 function Menu() {
   const router = useRouter();
-  let data = sessionStorage.getItem("credenciales");
-  if(data){
+  const data = sessionStorage.getItem("credenciales");
+  if (data) {
     return (
-      <div  >
-     
-          <SideBar></SideBar>
-      
-       
+      <div>
+        <SideBar></SideBar>
       </div>
-    )
-  }else{
-    router.push("/")
+    );
+  } else {
+    router.push("/");
   }
 }
 
-export default Menu
+export default Menu;
