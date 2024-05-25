@@ -17,6 +17,26 @@ function ProductosForm({id}) {
   const [categorias, setCategorias] = useState([]);
 const [categoriaNombre,setCategoriaNombre] = useState("")
 
+useEffect(() => {
+  const getProductos = async () => {
+    try {
+      const response = await axios.get(`/api/productos/${id}`);
+     setFormData({
+      nombre: response.data.nombre,
+      descripcion: response.data.descripcion,
+      existencias: response.data.existencias,
+      precio: response.data.precio,
+      proveedorSeleccionado: response.data.id_proveedor,
+      categoriaSeleccionado: response.data.id_categoria
+     })
+    } catch (error) {
+      console.error("Error al obtener los productos:", error);
+    }
+  };
+  getProductos();
+}, [id]);
+
+
   useEffect(() => {
     const getProveedores = async () => {
       try {
@@ -70,17 +90,27 @@ const [categoriaNombre,setCategoriaNombre] = useState("")
     e.preventDefault();
     obtenerCategoria()
     try {
-      const response = await axios.post('/api/productos', {
-        nombre:formData.nombre,
-        descripcion:formData.descripcion,
-        precio:formData.precio,
-        categoria:categoriaNombre,
-        existencias:formData.existencias,
-        id_categoria:formData.categoriaSeleccionado,
-        id_proveedor:formData.proveedorSeleccionado
-      });
-      console.log('Producto agregado:', response.data);
-      // Redirigir a la página de menú o mostrar un mensaje de éxito
+      if(id){
+        const response = await axios.patch(`/api/productos/${id}`, {
+          nombre:formData.nombre,
+          descripcion:formData.descripcion,
+          precio:formData.precio,
+          categoria:categoriaNombre,
+          existencias:formData.existencias,
+          id_categoria:formData.categoriaSeleccionado,
+          id_proveedor:formData.proveedorSeleccionado
+        });
+      }else{
+        const response = await axios.post('/api/productos', {
+          nombre:formData.nombre,
+          descripcion:formData.descripcion,
+          precio:formData.precio,
+          categoria:categoriaNombre,
+          existencias:formData.existencias,
+          id_categoria:formData.categoriaSeleccionado,
+          id_proveedor:formData.proveedorSeleccionado
+        });
+      }
       router.push('/Menu');
     } catch (error) {
       console.error('Error al agregar el producto:', error);

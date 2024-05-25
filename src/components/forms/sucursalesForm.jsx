@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import axios from 'axios';
 
@@ -10,6 +10,24 @@ function SucursalesForm({id}) {
     existencias: ''
   });
 
+  useEffect(() => {
+    const getSucursales = async () => {
+      try {
+        const response = await axios.get(`/api/sucursales/${id}`);
+        setFormData(
+          {
+            direccion: response.data.direccion,
+            existencias: response.data.existencias
+          }
+        )
+      } catch (error) {
+        console.error("Error al obtener los sucursales:", error);
+      }
+    };
+    getSucursales();
+  }, [id]);
+
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -18,8 +36,11 @@ function SucursalesForm({id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/sucursales', formData);
-      console.log('Sucursal agregada:', response.data);
+      if(id){
+        const response = await axios.patch(`/api/sucursales//${id}`, formData);
+      }else{
+        const response = await axios.post('/api/sucursales', formData);
+      }
       // Redirigir a la página de menú o mostrar un mensaje de éxito
       router.push('/Menu');
     } catch (error) {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import axios from 'axios';
 
@@ -12,6 +12,23 @@ function ProveedoresForm({id}) {
     telefono: ''
   });
 
+  useEffect(() => {
+    const getProveedores = async () => {
+      try {
+        const response = await axios.get(`/api/proveedores/${id}`);
+        setFormData({
+          nombre: response.data.nombre,
+          direccion: response.data.direccion ,
+          email: response.data.email,
+          telefono: response.data.telefono
+        })
+      } catch (error) {
+        console.error("Error al obtener los proveedores:", error);
+      }
+    };
+    getProveedores();
+  }, [id]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -20,8 +37,12 @@ function ProveedoresForm({id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+    if(id){
+      const response = await axios.patch(`/api/proveedores/${id}`, formData);
+    }else{
       const response = await axios.post('/api/proveedores', formData);
-      console.log('Proveedor agregado:', response.data);
+    }
+      
       // Redirigir a la página de menú o mostrar un mensaje de éxito
       router.push('/Menu');
     } catch (error) {

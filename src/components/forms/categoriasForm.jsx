@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-function CategoriasForm({id}) {
+function CategoriasForm({ id }) {
   const router = useRouter();
   const [proveedores, setProveedores] = useState([]);
   const [nombreCategoria, setNombreCategoria] = useState("");
@@ -24,12 +24,11 @@ function CategoriasForm({id}) {
   useEffect(() => {
     const getCategorias = async () => {
       try {
-        console.log(id)
-     if(id){
-      const response = await axios.get(`/api/categorias/${id}`);
-      setNombreCategoria(response.data.nombre)
-      setProveedorSeleccionado(response.data.id_proveedor)
-     }
+        if (id) {
+          const response = await axios.get(`/api/categorias/${id}`);
+          setNombreCategoria(response.data.nombre);
+          setProveedorSeleccionado(response.data.id_proveedor);
+        }
       } catch (error) {
         console.error("Error al obtener los categorais:", error);
       }
@@ -40,20 +39,18 @@ function CategoriasForm({id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     if(id){
-      const response = await axios.patch("/api/categorias", {
-        nombre: nombreCategoria,
-        id_proveedor: proveedorSeleccionado,
-       
-      });
-     }else{
-      const response = await axios.post("/api/categorias", {
-        nombre: nombreCategoria,
-        id_proveedor: proveedorSeleccionado,
-       
-      });
-     }
-      
+      if (id) {
+        const response = await axios.patch(`/api/categorias/${id}`, {
+          nombre: nombreCategoria,
+          id_proveedor: proveedorSeleccionado,
+        });
+      } else {
+        const response = await axios.post("/api/categorias", {
+          nombre: nombreCategoria,
+          id_proveedor: proveedorSeleccionado,
+        });
+      }
+
       // Redirigir o mostrar mensaje de éxito
       router.push("/Menu");
     } catch (error) {
@@ -73,10 +70,18 @@ function CategoriasForm({id}) {
         >
           Regresar
         </button>
-        <h1 className="py-4 text-center text-2xl">Ingrese una nueva categoria</h1>
-        <form className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <h1 className="py-4 text-center text-2xl">
+          Ingrese una nueva categoria
+        </h1>
+        <form
+          className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit}
+        >
           <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="nombre">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="nombre"
+            >
               Ingrese el nombre
             </label>
             <input
@@ -101,9 +106,14 @@ function CategoriasForm({id}) {
               value={proveedorSeleccionado}
               onChange={(e) => setProveedorSeleccionado(e.target.value)}
             >
-              <option value="" disabled>Choose a supplier</option>
-              {proveedores.map(proveedor => (
-                <option key={proveedor.id_proveedor} value={proveedor.id_proveedor}>
+              <option value="" disabled>
+                Choose a supplier
+              </option>
+              {proveedores.map((proveedor) => (
+                <option
+                  key={proveedor.id_proveedor}
+                  value={proveedor.id_proveedor}
+                >
                   {proveedor.nombre}
                 </option>
               ))}

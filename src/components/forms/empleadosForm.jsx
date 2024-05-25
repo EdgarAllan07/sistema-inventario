@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import axios from 'axios';
 
@@ -14,6 +14,26 @@ function EmpleadosForm({id}) {
     email: ''
   });
 
+  
+  useEffect(() => {
+    const getEmpleados = async () => {
+      try {
+        const response = await axios.get(`/api/Empleados/${id}`);
+        setFormData({
+          nombre: response.data.nombre,
+          apellido: response.data.apellido,
+          dui: response.data.dui,
+          direccion: response.data.direccion,
+          telefono: response.data.telefono,
+          email: response.data.email
+        })
+      } catch (error) {
+        console.error("Error al obtener los proveedores:", error);
+      }
+    };
+    getEmpleados();
+  }, [id]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -22,7 +42,12 @@ function EmpleadosForm({id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+     if(id){
+      const response = await axios.patch(`/api/Empleados/${id}`, formData);
+     }
+     else{
       const response = await axios.post('/api/Empleados', formData);
+     }
       // Redirigir a la página de menú o mostrar un mensaje de éxito
       router.push('/Menu');
     } catch (error) {
