@@ -1,22 +1,33 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
-import Productos from "./tables/Productos";
 
 function Menu() {
   const router = useRouter();
-  const data = sessionStorage.getItem("credenciales");
-  
-  if (data) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = sessionStorage.getItem("credenciales");
+      if (data) {
+        setIsAuthenticated(true);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [router]);
+
+  if (isAuthenticated) {
     return (
       <div>
-        <SideBar></SideBar>
+        <SideBar />
       </div>
     );
-  } else {
-    router.push("/");
   }
+
+  // You can return null or a loading indicator while the redirection is happening
+  return null;
 }
 
 export default Menu;

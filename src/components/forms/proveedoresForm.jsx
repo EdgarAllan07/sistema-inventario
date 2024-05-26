@@ -11,6 +11,7 @@ function ProveedoresForm({id}) {
     email: '',
     telefono: ''
   });
+  const [titulo,setTitulo] = useState("");
 
   useEffect(() => {
     const getProveedores = async () => {
@@ -39,8 +40,10 @@ function ProveedoresForm({id}) {
     try {
     if(id){
       const response = await axios.patch(`/api/proveedores/${id}`, formData);
+    
     }else{
       const response = await axios.post('/api/proveedores', formData);
+   
     }
       
       // Redirigir a la página de menú o mostrar un mensaje de éxito
@@ -50,6 +53,15 @@ function ProveedoresForm({id}) {
       // Manejar el error según sea necesario
     }
   };
+
+  
+  useEffect(()=>{
+    if(id){
+      setTitulo("Actualize de datos del proveedor con id: "+id)
+    }else{
+      setTitulo("Ingrese un nuevo proveedor")
+    }
+  },[id])
 
   return (
     <div>
@@ -63,7 +75,7 @@ function ProveedoresForm({id}) {
         >
           Regresar
         </button>
-        <h1 className="py-4 text-center text-2xl">Ingrese un nuevo proveedor</h1>
+        <h1 className="py-4 text-center text-2xl">{titulo}</h1>
         <form className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

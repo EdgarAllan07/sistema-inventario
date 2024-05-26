@@ -8,6 +8,7 @@ function CategoriasForm({ id }) {
   const [proveedores, setProveedores] = useState([]);
   const [nombreCategoria, setNombreCategoria] = useState("");
   const [proveedorSeleccionado, setProveedorSeleccionado] = useState("");
+  const [titulo,setTitulo] = useState("");
 
   useEffect(() => {
     const getProveedores = async () => {
@@ -44,11 +45,14 @@ function CategoriasForm({ id }) {
           nombre: nombreCategoria,
           id_proveedor: proveedorSeleccionado,
         });
+     
+     
       } else {
         const response = await axios.post("/api/categorias", {
           nombre: nombreCategoria,
           id_proveedor: proveedorSeleccionado,
         });
+        
       }
 
       // Redirigir o mostrar mensaje de éxito
@@ -57,6 +61,15 @@ function CategoriasForm({ id }) {
       console.error("Error al crear la categoría:", error);
     }
   };
+
+
+  useEffect(()=>{
+    if(id){
+      setTitulo("Actualize de datos de la categoria con id: "+id)
+    }else{
+      setTitulo("Ingrese una nueva categoria")
+    }
+  },[id])
 
   return (
     <div>
@@ -71,7 +84,7 @@ function CategoriasForm({ id }) {
           Regresar
         </button>
         <h1 className="py-4 text-center text-2xl">
-          Ingrese una nueva categoria
+          {titulo}
         </h1>
         <form
           className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4"

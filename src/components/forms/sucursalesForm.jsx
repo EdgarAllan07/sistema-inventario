@@ -9,6 +9,7 @@ function SucursalesForm({id}) {
     direccion: '',
     existencias: ''
   });
+  const [titulo,setTitulo] = useState("");
 
   useEffect(() => {
     const getSucursales = async () => {
@@ -33,13 +34,25 @@ function SucursalesForm({id}) {
     setFormData({ ...formData, [id]: value });
   };
 
+  useEffect(()=>{
+    if(id){
+      setTitulo("Actualize de datos de la sucursal con id: "+id)
+    }else{
+      setTitulo("Ingrese una nueva sucursal")
+    }
+  },[id])
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if(id){
         const response = await axios.patch(`/api/sucursales//${id}`, formData);
+    
+
       }else{
         const response = await axios.post('/api/sucursales', formData);
+      
       }
       // Redirigir a la página de menú o mostrar un mensaje de éxito
       router.push('/Menu');
@@ -61,7 +74,7 @@ function SucursalesForm({id}) {
         >
           Regresar
         </button>
-        <h1 className="py-4 text-center text-2xl">Ingrese una nueva sucursal</h1>
+        <h1 className="py-4 text-center text-2xl">{titulo}</h1>
         <form className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

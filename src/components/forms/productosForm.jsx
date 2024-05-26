@@ -15,7 +15,8 @@ function ProductosForm({id}) {
   });
   const [proveedores, setProveedores] = useState([]);
   const [categorias, setCategorias] = useState([]);
-const [categoriaNombre,setCategoriaNombre] = useState("")
+const [categoriaNombre,setCategoriaNombre] = useState("");
+const [titulo,setTitulo] = useState("");
 
 useEffect(() => {
   const getProductos = async () => {
@@ -100,6 +101,7 @@ useEffect(() => {
           id_categoria:formData.categoriaSeleccionado,
           id_proveedor:formData.proveedorSeleccionado
         });
+       
       }else{
         const response = await axios.post('/api/productos', {
           nombre:formData.nombre,
@@ -110,6 +112,7 @@ useEffect(() => {
           id_categoria:formData.categoriaSeleccionado,
           id_proveedor:formData.proveedorSeleccionado
         });
+
       }
       router.push('/Menu');
     } catch (error) {
@@ -117,6 +120,14 @@ useEffect(() => {
       // Manejar el error según sea necesario
     }
   };
+
+  useEffect(()=>{
+    if(id){
+      setTitulo("Actualize de datos del producto con id: "+id)
+    }else{
+      setTitulo("Ingrese un nuevo producto")
+    }
+  },[id])
 
   return (
     <div className='h-full'>
@@ -130,7 +141,7 @@ useEffect(() => {
         >
           Regresar
         </button>
-        <h1 className="py-4 text-center text-2xl">Ingrese un nuevo producto</h1>
+        <h1 className="py-4 text-center text-2xl">{titulo}</h1>
         <form className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

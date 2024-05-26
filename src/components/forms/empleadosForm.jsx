@@ -13,6 +13,7 @@ function EmpleadosForm({id}) {
     telefono: '',
     email: ''
   });
+  const [titulo,setTitulo] = useState("");
 
   
   useEffect(() => {
@@ -44,9 +45,11 @@ function EmpleadosForm({id}) {
     try {
      if(id){
       const response = await axios.patch(`/api/Empleados/${id}`, formData);
+  
      }
      else{
       const response = await axios.post('/api/Empleados', formData);
+    
      }
       // Redirigir a la página de menú o mostrar un mensaje de éxito
       router.push('/Menu');
@@ -55,6 +58,14 @@ function EmpleadosForm({id}) {
       // Manejar el error según sea necesario
     }
   };
+
+  useEffect(()=>{
+    if(id){
+      setTitulo("Actualize de datos del empleado con id: "+id)
+    }else{
+      setTitulo("Ingrese una nuevo Empleado")
+    }
+  },[id])
 
   return (
     <div className='h-full'>
@@ -68,7 +79,7 @@ function EmpleadosForm({id}) {
         >
           Regresar
         </button>
-        <h1 className="py-4 text-center text-2xl">Ingrese una nuevo Empleado</h1>
+        <h1 className="py-4 text-center text-2xl">{titulo}</h1>
         <form className="bg-[#2E6C37] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nombre">

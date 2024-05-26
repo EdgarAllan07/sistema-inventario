@@ -23,17 +23,19 @@ function Login() {
     e.preventDefault();
    
     try {
+      
       const response = await axios.post("/api/usuarios", {
         email: email,
         contra: contra,
       });
+      toast.loading("Cargando Credenciales..")
       sessionStorage.setItem("credenciales",true)
       // Si la autenticación es exitosa, redirige al usuario a la página principal
       router.push("/Menu");
-      toast.loading("Cargando Credenciales..")
+   
     } catch (error) {
       // Si hay un error en la autenticación, muestra el mensaje de error utilizando un toast
-      toast.error("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+      toast.error("Credenciales incorrectas. Por favor, inténtalo de nuevo.",{autoClose: 1000});
     }
   };
 
