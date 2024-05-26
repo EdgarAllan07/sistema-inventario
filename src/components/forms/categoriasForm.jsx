@@ -65,7 +65,7 @@ function CategoriasForm({ id }) {
 
   useEffect(()=>{
     if(id){
-      setTitulo("Actualize de datos de la categoria con id: "+id)
+      setTitulo("Actualiza de datos de la categoria con id: "+id)
     }else{
       setTitulo("Ingrese una nueva categoria")
     }
