@@ -123,7 +123,7 @@ useEffect(() => {
 
   useEffect(()=>{
     if(id){
-      setTitulo("Actualiza de datos del producto con id: "+id)
+      setTitulo("Actualiza los datos del producto con id: "+id)
     }else{
       setTitulo("Ingrese un nuevo producto")
     }

@@ -57,7 +57,7 @@ function ProveedoresForm({id}) {
   
   useEffect(()=>{
     if(id){
-      setTitulo("Actualiza de datos del proveedor con id: "+id)
+      setTitulo("Actualiza los datos del proveedor con id: "+id)
     }else{
       setTitulo("Ingrese un nuevo proveedor")
     }

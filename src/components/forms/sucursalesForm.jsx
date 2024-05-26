@@ -36,7 +36,7 @@ function SucursalesForm({id}) {
 
   useEffect(()=>{
     if(id){
-      setTitulo("Actualiza de datos de la sucursal con id: "+id)
+      setTitulo("Actualiza los datos de la sucursal con id: "+id)
     }else{
       setTitulo("Ingrese una nueva sucursal")
     }

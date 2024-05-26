@@ -61,7 +61,7 @@ function EmpleadosForm({id}) {
 
   useEffect(()=>{
     if(id){
-      setTitulo("Actualiza de datos del empleado con id: "+id)
+      setTitulo("Actualiza los datos del empleado con id: "+id)
     }else{
       setTitulo("Ingrese una nuevo Empleado")
     }
